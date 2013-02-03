@@ -5,7 +5,7 @@ $( document ).ready(function() {
     refresh_view = function() {
 
         // Refresh branch
-        $branch = $('#branch-selector .selected');
+        var $branch = $('#branch-selector .selected');
         if ($branch.length) {
             multi_graph.type = $branch.data('value');
         } else {
@@ -13,7 +13,7 @@ $( document ).ready(function() {
         }
 
         // Refresh party
-        $party = $('#party-selector .selected');
+        var $party = $('#party-selector .selected');
         if ($party.length) {
             multi_graph.party = $party.data('value');
         } else {
@@ -21,7 +21,7 @@ $( document ).ready(function() {
         }
 
         // Refresh gender
-        $gender = $('#gender-selector .selected');
+        var $gender = $('#gender-selector .selected');
         if ($gender.length) {
             multi_graph.gender = $gender.data('value');
         } else {
@@ -29,7 +29,7 @@ $( document ).ready(function() {
         }
 
         // DEBUG
-        //console.log(_.pick(multi_graph, 'type', 'party', 'gender'));
+        console.log(_.pick(multi_graph, 'type', 'party', 'gender'));
 
         multi_graph.load();
     };

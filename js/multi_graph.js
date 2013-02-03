@@ -2,6 +2,9 @@
 var multi_graph = {};
 
 multi_graph.load = function() {
+
+  $('#graph').empty();
+
   load_count = 3;
 
   d3.json("legislators.json", function(json) {
