@@ -1,0 +1,11 @@
+#history rect {
+  stroke: black;
+}
+
+rect.sen {
+  fill: orange;
+}
+
+rect.rep {
+  fill: red;
+}
