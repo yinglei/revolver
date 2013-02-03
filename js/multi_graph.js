@@ -33,15 +33,35 @@ multi_graph.load = function() {
   });
 };
 
+multi_graph.type = "all";
+multi_graph.party = "all";
+multi_graph.gender = "all";
+
 multi_graph.loadGraph = function() {
   var nodes = [];
   var node_map = {};
 
   multi_graph.legislators.forEach(function(legislator) {
+    var type = legislator.terms[legislator.terms.length-1].type;
+    if (multi_graph.type != "all" &&
+        multi_graph.type != type)
+      return;
+
+    var party = legislator.terms[legislator.terms.length-1].party;
+    if (multi_graph.party != "all" &&
+        multi_graph.party != party)
+      return;
+
+    var gender = legislator.bio.gender;
+    if (multi_graph.gender != "all" &&
+        multi_graph.gender != gender)
+      return;
+
     var node = {"type": "leg", "id": legislator.id.bioguide};
     nodes.push(node);
     node_map[node.id] = node;
   });
+
   multi_graph.contributors.forEach(function (contributor, i) {
     var name = contributor;
     contributor.total_contributions = 0;
@@ -78,6 +98,8 @@ multi_graph.loadGraph = function() {
   var w = 1024,
       h = 800,
       fill = d3.scale.category10();
+
+  d3.select("#graph").append("svg:svg").remove();
 
   var vis = d3.select("#graph").append("svg:svg")
       .attr("width", w)
