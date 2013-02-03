@@ -35,8 +35,6 @@
 			$.each(json, function(i, item) {
 				legislators[ item["id"][ "bioguide" ] ] = item;
 			});
-			console.log( "here" );
-			console.log( legislators[ "C000127" ]["terms"] );
 			fillSenatorInfo( "C000127" );
 		});
 	});
@@ -47,7 +45,6 @@
 		console.log( legislator );
 		
 		var tmp= { "name" : legislator["name"]["official_full"], "party" : legislator["terms"][ legislator["terms"].length - 1 ]["party"], "state" : legislator["terms"][ legislator["terms"].length - 1 ]["state"] }
-		console.log( tmp );
 		$( '#legislatorinfo' ).render( tmp );
 	}
 
@@ -62,6 +59,10 @@
 		<span class="name"></span>
 		<span class="party"></span>
 		<span class="state"></span>
+	</div>
+
+	<div id="senatortimeline">
+	
 	</div>
   </body>
 </html>
