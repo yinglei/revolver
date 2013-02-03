@@ -57,7 +57,7 @@ multi_graph.loadGraph = function() {
         "to": node_map[recipient.id],
         "weight": contribution.Amount
       };
-      if link.from && link.to
+      if (link.from && link.to)
         links.push(link);
     }
   });
