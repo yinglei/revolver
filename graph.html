@@ -9,6 +9,7 @@
     <link href="./bootstrap/css/bootstrap.css" rel="stylesheet">
     <link href="./bootstrap/css/bootstrap-responsive.css" rel="stylesheet">
     <link href="./css/revolver.css" rel="stylesheet">
+    <script type="text/javascript" src="./js/jquery-latest.min.js"></script>
     <script src="http://d3js.org/d3.v3.min.js"></script>
       <style type="text/css">
           .node circle {
@@ -17,6 +18,7 @@
               stroke: steelblue;
               stroke-width: 1.5px;
           }
+      </script>
     <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
     <!--[if lt IE 9]>
       <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
@@ -65,6 +67,12 @@
             </div>
         </div>
 
+        <div id="legislatorinfo">
+          <span class="name"></span>
+          <span class="party"></span>
+          <span class="state"></span>
+        </div>
+
         <div id="graph">
         </div>
     </div> <!-- /container -->
@@ -79,8 +87,6 @@
         chartData.name = "Congress";
         var congressChildren = new Array();
         //sets main node for chart
-
-        $( document ).ready(function() {
 
             //Load the data from some server
             $.getJSON("data/lobbyist_network.json", function(json) {
@@ -171,9 +177,6 @@
                 });
             });
 
-            //********************************
-            //chart rendering starts here....
-            //********************************
             chartData.children = congressChildren;
 
             var m = [20, 120, 20, 120],
@@ -310,8 +313,6 @@
                 }
             }
           multi_graph.load();
-        });
-
     </script>
   </body>
 </html>
