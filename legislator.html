@@ -44,7 +44,7 @@
 		var legislator =  legislators[ bioguide ];
 		console.log( legislator );
 		
-		var tmp= { "name" : legislator["name"]["official_full"], "party" : legislator["terms"][ legislator["terms"].length - 1 ]["party"], "state" : legislator["terms"][ legislator["terms"].length - 1 ]["state"] }
+		var tmp= { "name" : legislator["name"]["official_full"], "party" : legislator["terms"][ legislator["terms"].length - 1 ]["party"], "state" : legislator["terms"][ legislator["terms"].length - 1 ]["state"], "type" :  legislator["terms"][ legislator["terms"].length - 1 ]["type"], "born": legislator["bio"]["birthday"], "religion": legislator["bio"]["religion"], "gender" : legislator["bio"]["gender"] }
 		$( '#legislatorinfo' ).render( tmp );
 	}
 
