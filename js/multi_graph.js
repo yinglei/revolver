@@ -68,7 +68,7 @@ multi_graph.loadGraph = function() {
   });
 
   var w = 1024,
-      h = 1024,
+      h = 800,
       fill = d3.scale.category10();
 
   var vis = d3.select("#graph").append("svg:svg")
