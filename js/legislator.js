@@ -7,3 +7,11 @@ legislator_pane.fillSenatorInfo = function( legislator) {
   };
   $( '#legislatorinfo' ).render( tmp );
 }
+
+legislator_pane.fillContributorInfo = function(contributor) {
+  var tmp= { "name" : contributor.name,
+             "party" : "Contributor",
+             "state" : "State"
+  };
+  $( '#legislatorinfo' ).render( tmp );
+}

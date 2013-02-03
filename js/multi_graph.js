@@ -97,6 +97,10 @@ multi_graph.loadGraph = function() {
         if (node.type == "leg") {
           var legislator = multi_graph.legislator_map[node_map[node.id].id];
           legislator_pane.fillSenatorInfo(legislator);
+        } else {
+          legislator_pane.fillContributorInfo({
+              "name": multi_graph.contributors[node.id],
+          });
         }
       })
       .call(force.drag);
@@ -104,10 +108,12 @@ multi_graph.loadGraph = function() {
     node
       .append("text")
       .text(function(node) { 
-        if (node.type == "leg")
-          return multi_graph.legislator_map[node_map[node.id]];
-        else 
+        if (node.type == "leg") {
+          var legislator = multi_graph.legislator_map[node_map[node.id].id];
+          return legislator.name.official_full;
+        } else {
           return node_map[node.id];
+        }
       });
 
   vis.style("opacity", 1e-6)
