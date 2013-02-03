@@ -320,6 +320,7 @@
         }
 
         force.on = function(type, listener) {
+          console.log(event[type]);
             event[type].add(listener);
             return force;
         };
