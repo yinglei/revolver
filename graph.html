@@ -1,112 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
 
-var multi_graph = {};
+    <meta charset="utf-8">
+    <title>Revolving Dollar</title>
+    <meta name="description" content="">
 
-multi_graph.load = function() {
-  load_count = 3;
+    <link href="./bootstrap/css/bootstrap.css" rel="stylesheet">
+    <link href="./bootstrap/css/bootstrap-responsive.css" rel="stylesheet">
+    <link href="./css/revolver.css" rel="stylesheet">
 
-  d3.json("legislators.json", function(json) {
-    multi_graph.legislators = json;
-    multi_graph.legislator_map = {};
-    multi_graph.legislators.forEach(function(legislator) {
-      multi_graph.legislator_map[legislator.id.bioguide] = legislator;
-    });
-    load_count--;
-    if (load_count == 0) {
-      multi_graph.loadGraph();
-    }
-  });
+    <style type="text/css">
+        .node circle {
+            cursor: pointer;
+            fill: #fff;
+            stroke: steelblue;
+            stroke-width: 1.5px;
+        }
+    </style>
 
-  d3.json("contributors.json", function(json) {
-    multi_graph.contributors = json;
-    load_count--;
-    if (load_count == 0) {
-      multi_graph.loadGraph();
-    }
-  });
+    <script src="./js/jquery-latest.min.js"></script>
+    <script src="http://d3js.org/d3.v3.min.js"></script>
+    <script src="./js/transparency.js"></script>
+    <script src="./js/underscore-min.js"></script>
+    <script src="./js/backbone-min.js"></script>
+    <script src="./js/graph.js"></script>
+    <script src="./js/multi_graph.js"></script>
 
-  d3.json("contributions.json", function(json) {
-    multi_graph.contributions = json;
-    load_count--;
-    if (load_count == 0) {
-      multi_graph.loadGraph();
-    }
-  });
-};
+    <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
 
-multi_graph.loadGraph = function() {
-  var nodes = [];
-  var node_map = {};
+  </head>
 
-  multi_graph.legislators.forEach(function(legislator) {
-    var node = {"type": "leg", "id": legislator.id.bioguide};
-    nodes.push(node);
-    node_map[node.id] = node;
-  });
-  multi_graph.contributors.forEach(function (contributor, i) {
-    var node = {"type": "contrib", "id": i};
-    nodes.push(node);
-    node_map[contributor] = node;
-  });
+  <body>
 
-  var links = [];
-  multi_graph.contributions.forEach(function (recipient) {
-    for (var c = 0; c < recipient.contributions.length; ++c) {
-      var contribution = recipient.contributions[c];
-      var link = {
-        "from": node_map[contribution.Contrib],
-        "to": node_map[recipient.id],
-        "weight": contribution.Amount
-      };
-      if (link.from && link.to)
-        links.push(link);
-    }
-  });
-  console.log(links);
+    <div class="navbar navbar-fixed-top">
+      <div class="navbar-inner">
+        <div class="container-fluid">
+          <div class="row-fluid">
+            <div class="span1"></div>
+            <div class="span10">
+              <a class="brand" href="#">Revolving Dollar</a>
+              <div class="nav-collapse collapse">
+                <ul class="nav">
+                  <li class="active all"><a href="/">All</a></li>
+                  <li class="finance"><a href="#finance">Finance</a></li>
+                  <li class><a href="#healthcare">Health Care</a></li>
+                  <li class><a href="#environment">Environment</a></li>
+                </ul>
+              </div><!--/.nav-collapse -->
+            </div>
+            <div class="span1"></div>
+          </div>
+        </div>
+      </div>
+    </div>
 
-  var w = 1024,
-      h = 1024,
-      fill = d3.scale.category10();
+    <div class="container-fluid">
+      <div class="row-fluid">
 
-  var vis = d3.select("body").append("svg:svg")
-      .attr("width", w)
-      .attr("height", h);
+        <div class="span1"></div>
 
-  var force = d3.layout.force()
-      .nodes(nodes)
-      .links(links)
-      .size([w, h])
-      .charge(-1)
-      .start();
+        <div id="main" class="span8">
 
-  var node = vis.selectAll("circle.node")
-      .data(nodes)
-      .enter().append("svg:circle")
-      .attr("class", "node")
-      .attr("id", function(d) { return d.type +"-"+d.id; })
-      .attr("cx", function(d) { return d.x; })
-      .attr("cy", function(d) { return d.y; })
-      .attr("r", 4)
-      .style("fill", function(d, i) { return fill(d.type == "leg"); })
-      .style("stroke", function(d, i) { return d3.rgb(fill(d.type == "leg")).darker(2); })
-      .style("stroke-width", 1.5)
-      .on("click", function(node) {
-        console.log(node);
-        fillSenatorInfo( multi_graph.legislator_map["C000127"] );
-      })
-      .call(force.drag);
+          <div class="btn-group">
+            <button class="btn">Senate</button>
+            <button class="btn">House</button>
+          </div>
+          <div class="btn-group">
+            <button class="btn">Democrat</button>
+            <button class="btn">Replublican</button>
+          </div>
+          <div class="btn-group">
+            <button class="btn">Male</button>
+            <button class="btn">Female</button>
+          </div>
 
-  vis.style("opacity", 1e-6)
-    .transition()
-    .duration(1000)
-    .style("opacity", 1);
+          <div id="graph"></div>
 
-  force.on("tick", function(e) {
-    var k = 9 * e.alpha;
-    nodes.forEach(function(o, i) {
-      o.y += o.type == "leg" ? k : -k;
-    });
+        </div>
 
-    node.attr("cx", function(d) { return d.x; })
-        .attr("cy", function(d) { return d.y; });
-  });
-};
+        <div id="sidebar" class="span2">
+          <h2>Detail</h2>
+          <div id="legislatorinfo">
+            <h3 class="name">Boxer</h3>
+            <p class="party">Democrat</p>
+            <p class="state">California</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </body>
+</html>
