@@ -71,7 +71,7 @@ multi_graph.loadGraph = function() {
       h = 1024,
       fill = d3.scale.category10();
 
-  var vis = d3.select("body").append("svg:svg")
+  var vis = d3.select("#graph").append("svg:svg")
       .attr("width", w)
       .attr("height", h);
 
