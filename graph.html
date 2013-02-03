@@ -20,6 +20,7 @@
     </style>
 
     <script src="./js/jquery-latest.min.js"></script>
+    <script src="./bootstrap/js/bootstrap.js"></script>
     <script src="http://d3js.org/d3.v3.js"></script>
     <script src="./js/transparency.js"></script>
     <script src="./js/underscore-min.js"></script>
@@ -67,17 +68,17 @@
 
         <div id="main" class="span8">
 
-          <div class="btn-group">
-            <button class="btn">Senate</button>
-            <button class="btn">House</button>
+          <div id="branch-selector" class="btn-group" data-toggle="buttons-checkbox">
+            <button class="btn senate" data-value="sen">Senate</button>
+            <button class="btn house" data-value="rep">House</button>
           </div>
-          <div class="btn-group">
-            <button class="btn">Democrat</button>
-            <button class="btn">Replublican</button>
+          <div id="party-selector" class="btn-group" data-toggle="buttons-checkbox">
+            <button class="btn democrat" data-value="Democrat">Democrat</button>
+            <button class="btn republican" data-value="Republican">Replublican</button>
           </div>
-          <div class="btn-group">
-            <button class="btn">Male</button>
-            <button class="btn">Female</button>
+          <div id="gender-selector" class="btn-group" data-toggle="buttons-checkbox">
+            <button class="btn male" data-value="M">Male</button>
+            <button class="btn female" data-value="F">Female</button>
           </div>
 
           <div id="graph"></div>
