@@ -236,5 +236,5 @@ $( document ).ready(function() {
             d._children = null;
         }
     }
-  multi_graph.load();
+    multi_graph.load();
 });
