@@ -20,6 +20,7 @@
     </style>
 
     <script src="./js/jquery-latest.min.js"></script>
+    <script src="./bootstrap/js/bootstrap.js"></script>
     <script src="http://d3js.org/d3.v3.js"></script>
     <script src="./js/transparency.js"></script>
     <script src="./js/underscore-min.js"></script>
@@ -44,7 +45,7 @@
           <div class="row-fluid">
             <div class="span1"></div>
             <div class="span10">
-              <a class="brand" href="#"><strong>Revolving Dollar</strong></a>
+              <a class="brand" href="#"><img src="./img/rib.png" style="height: 24px; margin-right: 6px"><strong>Revolving Dollar</strong></a>
               <div class="nav-collapse collapse">
                 <ul class="nav">
                   <li class="active all"><a href="/">All</a></li>
@@ -67,17 +68,17 @@
 
         <div id="main" class="span8">
 
-          <div class="btn-group">
-            <button class="btn">Senate</button>
-            <button class="btn">House</button>
+          <div id="branch-selector" class="btn-group" data-toggle="buttons-checkbox">
+            <button class="btn senate" data-value="sen">Senate</button>
+            <button class="btn house" data-value="rep">House</button>
           </div>
-          <div class="btn-group">
-            <button class="btn">Democrat</button>
-            <button class="btn">Replublican</button>
+          <div id="party-selector" class="btn-group" data-toggle="buttons-checkbox">
+            <button class="btn democrat" data-value="Democrat">Democrat</button>
+            <button class="btn republican" data-value="Republican">Replublican</button>
           </div>
-          <div class="btn-group">
-            <button class="btn">Male</button>
-            <button class="btn">Female</button>
+          <div id="gender-selector" class="btn-group" data-toggle="buttons-checkbox">
+            <button class="btn male" data-value="M">Male</button>
+            <button class="btn female" data-value="F">Female</button>
           </div>
 
           <div id="graph"></div>
@@ -85,23 +86,23 @@
         </div>
 
         <div id="sidebar" class="span2">
-          <div id="legislatorinfo">
-            <h3 class="name">Barbara Boxer</h3>
+          <div id="legislatorinfo" style="display: none">
+            <h3 class="name"></h3>
             <dl>
               <dt>Legislative Branch</dt>
-              <dd class="type">Senate</dd>
+              <dd class="branch"></dd>
               <dt>State</dt>
-              <dd class="state">California</dd>
+              <dd class="state"></dd>
               <dt>Party</dt>
-              <dd class="party">Democrat</dd>
+              <dd class="party"></dd>
               <dt>Born</dt>
-              <dd class="born">November 11, 1940</dd>
+              <dd class="born"></dd>
               <dt>Gender</dt>
-              <dd class="gender">Female</dd>
+              <dd class="gender"></dd>
               <dt>Religion</dt>
-              <dd class="religion">California</dd>
+              <dd class="religion"></dd>
               <dt>Total Contributions</dt>
-              <dd class="total_contributions">$1000 trillion!!!</dd>
+              <dd class="total_contributions"></dd>
             </dl>
           </div>
         </div>
