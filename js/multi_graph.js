@@ -43,6 +43,10 @@ multi_graph.loadGraph = function() {
     node_map[node.id] = node;
   });
   multi_graph.contributors.forEach(function (contributor, i) {
+    var name = contributor;
+    contributor.total_contributions = 0;
+    contributor.name = name;
+
     var node = {"type": "contrib", "id": i};
     nodes.push(node);
     node_map[contributor] = node;
@@ -53,12 +57,16 @@ multi_graph.loadGraph = function() {
     var total_contributions = 0;
     for (var c = 0; c < recipient.contributions.length; ++c) {
       var contribution = recipient.contributions[c];
-      total_contributions += parseFloat(contribution.Amount, 10);
+      var amount = parseFloat(contribution.Amount, 10);
+      total_contributions += amount;
       var link = {
         "source": node_map[contribution.Contrib],
         "target": node_map[recipient.id],
-        "weight": contribution.Amount
+        "weight": amount
       };
+      var contrib_index = node_map[contribution.Contrib];
+      if (contrib_index.id)
+        multi_graph.contributors[contrib_index.id].total_contributions += amount;
       var legislator = multi_graph.legislator_map[recipient.id];
       legislator.total_contributions = total_contributions;
 
@@ -98,8 +106,10 @@ multi_graph.loadGraph = function() {
           var legislator = multi_graph.legislator_map[node_map[node.id].id];
           legislator_pane.fillSenatorInfo(legislator);
         } else {
+          var contributor = multi_graph.contributors[node.id];
           legislator_pane.fillContributorInfo({
-              "name": multi_graph.contributors[node.id],
+              "name": contributor.name,
+              "total_contributions": contributor.total_contributions,
           });
         }
       })
