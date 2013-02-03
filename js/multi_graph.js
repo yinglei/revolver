@@ -53,11 +53,11 @@ multi_graph.loadGraph = function() {
     for (var c = 0; c < recipient.contributions.length; ++c) {
       var contribution = recipient.contributions[c];
       var link = {
-        "from": node_map[contribution.Contrib],
-        "to": node_map[recipient.id],
+        "source": node_map[contribution.Contrib],
+        "target": node_map[recipient.id],
         "weight": contribution.Amount
       };
-      if (link.from && link.to)
+      if (link.source && link.target && link.weight)
         links.push(link);
     }
   });
@@ -85,15 +85,24 @@ multi_graph.loadGraph = function() {
       .attr("id", function(d) { return d.type +"-"+d.id; })
       .attr("cx", function(d) { return d.x; })
       .attr("cy", function(d) { return d.y; })
-      .attr("r", 4)
+      .attr("r", 6)
       .style("fill", function(d, i) { return fill(d.type == "leg"); })
       .style("stroke", function(d, i) { return d3.rgb(fill(d.type == "leg")).darker(2); })
       .style("stroke-width", 1.5)
       .on("click", function(node) {
         console.log(node);
-        fillSenatorInfo( multi_graph.legislator_map["C000127"] );
+        //fillSenatorInfo( multi_graph.legislator_map["C000127"] );
       })
       .call(force.drag);
+
+    node
+      .append("title")
+      .text(function(node) { 
+        if (node.type == "leg")
+          return multi_graph.legislator_map[node_map[node.id]];
+        else 
+          return node_map[node.id];
+      });
 
   vis.style("opacity", 1e-6)
     .transition()
