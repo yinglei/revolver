@@ -4,7 +4,7 @@ var multi_graph = {};
 multi_graph.load = function() {
   load_count = 4;
 
-  d3.json("legislators.json", function(json) {
+  d3.json("data/legislators.json", function(json) {
     multi_graph.legislators = json;
     multi_graph.legislator_map = {};
     multi_graph.legislators.forEach(function(legislator) {
@@ -17,7 +17,7 @@ multi_graph.load = function() {
     }
   });
 
-  d3.json("contributors.json", function(json) {
+  d3.json("data/contributors.json", function(json) {
     multi_graph.contributors = json.map(function(entry) {
       return { "name": entry,
                "total_contributions": 0
@@ -29,7 +29,7 @@ multi_graph.load = function() {
     }
   });
 
-  d3.json("contributions.json", function(json) {
+  d3.json("data/contributions.json", function(json) {
     multi_graph.contributions = json;
     load_count--;
     if (load_count == 0) {
@@ -37,13 +37,13 @@ multi_graph.load = function() {
     }
   });
 
-  d3.json("committees.json", function(json) {
+  d3.json("data/committees.json", function(json) {
     multi_graph.committees = json;
     load_count--;
     if (load_count == 0) {
       multi_graph.loadGraph();
     }
-  })
+  });
 };
 
 multi_graph.type = "all";
