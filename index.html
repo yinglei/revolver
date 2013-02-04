@@ -1,1 +1,114 @@
-My GitHub Page
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+
+    <meta charset="utf-8">
+    <title>Revolving Dollar</title>
+    <meta name="description" content="">
+
+    <link href="/bootstrap/css/bootstrap.css" rel="stylesheet">
+    <link href="/bootstrap/css/bootstrap-responsive.css" rel="stylesheet">
+    <link href="/css/revolver.css" rel="stylesheet">
+
+    <script src="/js/jquery-latest.min.js"></script>
+    <script src="/bootstrap/js/bootstrap.js"></script>
+    <script src="/js/d3.js"></script>
+    <script src="/js/transparency.js"></script>
+    <script src="/js/underscore-min.js"></script>
+    <script src="/js/backbone-min.js"></script>
+    <script src="/js/revolver.js"></script>
+    <script src="/js/graph.js"></script>
+    <script src="/js/multi_graph.js"></script>
+    <script src="/js/legislator.js"></script>
+
+    <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+  </head>
+
+  <body>
+
+    <div class="navbar navbar-fixed-top">
+      <div class="navbar-inner">
+        <div class="container-fluid">
+          <div class="row-fluid">
+            <div class="span1"></div>
+            <div class="span10">
+              <a class="brand" href="#"><img src="./img/rib.png" style="height: 24px; margin-right: 6px"><strong>Revolving Dollar</strong></a>
+              <div class="nav-collapse collapse">
+                <ul class="nav">
+                  <li class="active"><a href="#">All Issues</a></li>
+                  <li><a href="#">Finance</a></li>
+                  <li><a href="#">Health Care</a></li>
+                  <li><a href="#">Environment</a></li>
+                </ul>
+              </div><!--/.nav-collapse -->
+            </div>
+            <div class="span1"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="container-fluid">
+      <div class="row-fluid">
+
+        <div class="span1"></div>
+
+        <div id="main" class="span7">
+
+          <div id="branch-selector" class="btn-group" data-toggle="buttons-checkbox">
+            <button class="btn senate" data-value="sen">Senate</button>
+            <button class="btn house" data-value="rep">House</button>
+          </div>
+          <div id="party-selector" class="btn-group" data-toggle="buttons-checkbox">
+            <button class="btn democrat" data-value="Democrat">Democrat</button>
+            <button class="btn republican" data-value="Republican">Replublican</button>
+          </div>
+          <div id="gender-selector" class="btn-group" data-toggle="buttons-checkbox">
+            <button class="btn male" data-value="M">Male</button>
+            <button class="btn female" data-value="F">Female</button>
+          </div>
+
+          <div id="graph"></div>
+
+        </div>
+
+        <div id="sidebar" class="span3">
+
+          <div id="legislatorinfo" style="display: none">
+            <h3 class="name"></h3>
+            <dl>
+              <dt>Legislative Branch</dt>
+              <dd class="branch"></dd>
+              <dt>State</dt>
+              <dd class="state"></dd>
+              <dt>Party</dt>
+              <dd class="party"></dd>
+              <dt>Born</dt>
+              <dd class="born"></dd>
+              <dt>Gender</dt>
+              <dd class="gender"></dd>
+              <dt>Religion</dt>
+              <dd class="religion"></dd>
+              <dt>Total Contributions</dt>
+              <dd class="total_contributions"></dd>
+            </dl>
+          </div>
+
+          <div id="contributorinfo" style="display: none">
+            <h3 class="name"></h3>
+            <dl>
+              <dt>Total Contributions</dt>
+              <dd class="total_contributions"></dd>
+            </dl>
+          </div>
+
+        </div>
+
+      </div>
+    </div>
+  </body>
+</html>
