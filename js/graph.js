@@ -1,8 +1,8 @@
-$( document ).ready(function() {
+$(document).ready(function() {
 
     multigraph.load();
 
-    refresh_view = function() {
+    var refresh_view = function() {
 
         // Refresh branch
         var $branch = $('#branch-selector .selected');
@@ -47,8 +47,6 @@ $( document ).ready(function() {
     });
 
     $house.on('click', function() {
-        var $senate = $('#branch-selector .senate')
-        var $house = $('#branch-selector .house')
         if ($senate.hasClass('selected')) {
             $senate.removeClass('selected');
             $senate.button('toggle');
