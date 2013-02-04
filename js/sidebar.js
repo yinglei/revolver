@@ -73,6 +73,15 @@ Number.prototype.toPrettyString = function() {
   return strings.join(".");
 }
 
+Date.prototype.toAge = function() {
+  if (!this.getTime()) return;  // For invalid dates
+  var now = new Date(Date.now());
+  var age = now.getUTCFullYear() - this.getUTCFullYear();
+  if (now.getUTCMonth() < this.getUTCMonth()) age--;
+  if (now.getUTCMonth() == this.getUTCMonth() && now.getUTCDate() < this.getUTCDate()) age--;
+  return age;
+}
+
 sidebar.fillSenatorInfo = function(legislator) {
 
   var tmp = {
@@ -80,7 +89,7 @@ sidebar.fillSenatorInfo = function(legislator) {
     "branch": legislator.terms[legislator["terms"].length - 1].type || "n/a",
     "state": legislator.terms[legislator["terms"].length - 1].state || "n/a",
     "party": legislator.terms[legislator["terms"].length - 1].party || "n/a",
-    "born": legislator.bio.birthday || "n/a",
+    "age": (new Date(legislator.bio.birthday)).toAge() || "n/a",
     "gender": legislator.bio.gender || "n/a",
     "religion": legislator.bio.religion || "n/a",
     "total_contributions": legislator.total_contributions || 0
