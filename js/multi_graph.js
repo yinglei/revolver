@@ -2,15 +2,13 @@
 var multi_graph = {};
 
 multi_graph.load = function() {
-
-  $('#graph').empty();
-
-  load_count = 3;
+  load_count = 4;
 
   d3.json("legislators.json", function(json) {
     multi_graph.legislators = json;
     multi_graph.legislator_map = {};
     multi_graph.legislators.forEach(function(legislator) {
+      legislator.committees = [];
       multi_graph.legislator_map[legislator.id.bioguide] = legislator;
     });
     load_count--;
@@ -20,7 +18,11 @@ multi_graph.load = function() {
   });
 
   d3.json("contributors.json", function(json) {
-    multi_graph.contributors = json;
+    multi_graph.contributors = json.map(function(entry) {
+      return { "name": entry,
+               "total_contributions": 0
+      };
+    });
     load_count--;
     if (load_count == 0) {
       multi_graph.loadGraph();
@@ -34,6 +36,14 @@ multi_graph.load = function() {
       multi_graph.loadGraph();
     }
   });
+
+  d3.json("committees.json", function(json) {
+    multi_graph.committees = json;
+    load_count--;
+    if (load_count == 0) {
+      multi_graph.loadGraph();
+    }
+  })
 };
 
 multi_graph.type = "all";
@@ -43,6 +53,15 @@ multi_graph.gender = "all";
 multi_graph.loadGraph = function() {
   var nodes = [];
   var node_map = {};
+
+  /*
+  multi_graph.committees.forEach(function (committee_key) {
+    var committee = multi_graph.committees[committee_key];
+    committee.forEach(function(member) {
+      multi_graph.legislator_map[member.bioguide].committees.push(committee_key);
+    });
+  });
+  */
 
   multi_graph.legislators.forEach(function(legislator) {
     var type = legislator.terms[legislator.terms.length-1].type;
@@ -65,14 +84,11 @@ multi_graph.loadGraph = function() {
     node_map[node.id] = node;
   });
 
-  multi_graph.contributors.forEach(function (contributor, i) {
-    var name = contributor;
-    contributor.total_contributions = 0;
-    contributor.name = name;
 
+  multi_graph.contributors.forEach(function (contributor, i) {
     var node = {"type": "contrib", "id": i};
     nodes.push(node);
-    node_map[contributor] = node;
+    node_map[contributor.name] = node;
   });
 
   var links = [];
