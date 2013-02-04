@@ -122,7 +122,7 @@ multi_graph.loadGraph = function() {
       .attr("id", function(d) { return d.type +"-"+d.id; })
       .attr("cx", function(d) { return d.x; })
       .attr("cy", function(d) { return d.y; })
-      .attr("r", 6)
+      .attr("r", 3)
       .style("fill", function(d, i) { return fill(d.type == "leg"); })
       .style("stroke", function(d, i) { return d3.rgb(fill(d.type == "leg")).darker(2); })
       .style("stroke-width", 1.5)
@@ -132,10 +132,7 @@ multi_graph.loadGraph = function() {
           legislator_pane.fillSenatorInfo(legislator);
         } else {
           var contributor = multi_graph.contributors[node.id];
-          legislator_pane.fillContributorInfo({
-              "name": contributor.name,
-              "total_contributions": contributor.total_contributions,
-          });
+          legislator_pane.fillContributorInfo(contributor);
         }
       })
       .call(force.drag);

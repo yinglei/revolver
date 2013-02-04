@@ -29,7 +29,7 @@ $( document ).ready(function() {
         }
 
         // DEBUG
-        console.log(_.pick(multi_graph, 'type', 'party', 'gender'));
+        //console.log(_.pick(multi_graph, 'type', 'party', 'gender'));
 
         multi_graph.load();
     };
