@@ -64,6 +64,15 @@ GENDERS = {
   F: "Female"
 };
 
+Number.prototype.toPrettyString = function() {
+  var pattern = /(\d+)(\d\d\d)/;
+  var strings = this.toString().split(".");
+  while (pattern.test(strings[0])) {
+    strings[0] = strings[0].replace(pattern, "$1,$2");
+  }
+  return strings.join(".");
+}
+
 sidebar.fillSenatorInfo = function(legislator) {
 
   var tmp = {
@@ -81,7 +90,7 @@ sidebar.fillSenatorInfo = function(legislator) {
   if (tmp.branch in BRANCHES) tmp.branch = BRANCHES[tmp.branch];
   if (tmp.state in STATES) tmp.state = STATES[tmp.state];
   if (tmp.gender in GENDERS) tmp.gender = GENDERS[tmp.gender];
-  tmp.total_contributions = "$" + tmp.total_contributions;
+  tmp.total_contributions = "$" + tmp.total_contributions.toPrettyString();
 
   $('#contributorinfo').hide();
   $('#legislatorinfo').show();
