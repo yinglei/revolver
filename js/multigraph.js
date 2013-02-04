@@ -1,77 +1,77 @@
 
-var multi_graph = {};
+var multigraph = {};
 
-multi_graph.load = function() {
+multigraph.load = function() {
 
   $('#graph').empty();
 
   load_count = 3;
 
   d3.json("data/legislators.json", function(json) {
-    multi_graph.legislators = json;
-    multi_graph.legislator_map = {};
-    multi_graph.legislators.forEach(function(legislator) {
+    multigraph.legislators = json;
+    multigraph.legislator_map = {};
+    multigraph.legislators.forEach(function(legislator) {
       legislator.committees = [];
-      multi_graph.legislator_map[legislator.id.bioguide] = legislator;
+      multigraph.legislator_map[legislator.id.bioguide] = legislator;
     });
-    if (--load_count == 0) multi_graph.loadGraph();
+    if (--load_count == 0) multigraph.loadGraph();
   });
 
   d3.json("data/contributors.json", function(json) {
-    multi_graph.contributors = json.map(function(entry) {
+    multigraph.contributors = json.map(function(entry) {
       return {
         "name": entry,
         "total_contributions": 0
       };
     });
-    if (--load_count == 0) multi_graph.loadGraph();
+    if (--load_count == 0) multigraph.loadGraph();
   });
 
   d3.json("data/contributions.json", function(json) {
-    multi_graph.contributions = json;
-    if (--load_count == 0) multi_graph.loadGraph();
+    multigraph.contributions = json;
+    if (--load_count == 0) multigraph.loadGraph();
   });
 
   /* TODO
   d3.json("data/committees.json", function(json) {
-    multi_graph.committees = json;
-    if (--load_count == 0) multi_graph.loadGraph();
+    multigraph.committees = json;
+    if (--load_count == 0) multigraph.loadGraph();
   });
   */
 
 };
 
-multi_graph.type = "all";
-multi_graph.party = "all";
-multi_graph.gender = "all";
+multigraph.type = "all";
+multigraph.party = "all";
+multigraph.gender = "all";
 
-multi_graph.loadGraph = function() {
+multigraph.loadGraph = function() {
   var nodes = [];
   var node_map = {};
 
   /* TODO
-  multi_graph.committees.forEach(function (committee_key) {
-    var committee = multi_graph.committees[committee_key];
+  multigraph.committees.forEach(function (committee_key) {
+    var committee = multigraph.committees[committee_key];
     committee.forEach(function(member) {
-      multi_graph.legislator_map[member.bioguide].committees.push(committee_key);
+      multigraph.legislator_map[member.bioguide].committees.push(committee_key);
     });
   });
   */
 
-  multi_graph.legislators.forEach(function(legislator) {
+  multigraph.legislators.forEach(function(legislator) {
     var type = legislator.terms[legislator.terms.length-1].type;
-    if (multi_graph.type != "all" &&
-        multi_graph.type != type)
+    if (multigraph.type != "all" &&
+        multigraph.type != type)
       return;
 
     var party = legislator.terms[legislator.terms.length-1].party;
-    if (multi_graph.party != "all" &&
-        multi_graph.party != party)
+    if (multigraph.party != "all" &&
+        multigraph.party != party)
       return;
 
     var gender = legislator.bio.gender;
-    if (multi_graph.gender != "all" &&
-        multi_graph.gender != gender)
+    if (multigraph.gender != "all" &&
+        multigraph.gender != gender)
       return;
 
     var node = {"type": "leg", "id": legislator.id.bioguide};
@@ -80,14 +80,14 @@ multi_graph.loadGraph = function() {
   });
 
 
-  multi_graph.contributors.forEach(function (contributor, i) {
+  multigraph.contributors.forEach(function (contributor, i) {
     var node = {"type": "contrib", "id": i};
     nodes.push(node);
     node_map[contributor.name] = node;
   });
 
   var links = [];
-  multi_graph.contributions.forEach(function (recipient) {
+  multigraph.contributions.forEach(function (recipient) {
     var total_contributions = 0;
     for (var c = 0; c < recipient.contributions.length; ++c) {
       var contribution = recipient.contributions[c];
@@ -100,8 +100,8 @@ multi_graph.loadGraph = function() {
       };
       var contrib_index = node_map[contribution.Contrib];
       if (contrib_index.id)
-        multi_graph.contributors[contrib_index.id].total_contributions += amount;
-      var legislator = multi_graph.legislator_map[recipient.id];
+        multigraph.contributors[contrib_index.id].total_contributions += amount;
+      var legislator = multigraph.legislator_map[recipient.id];
       legislator.total_contributions = total_contributions;
 
       if (link.source && link.target && link.weight)
@@ -139,10 +139,10 @@ multi_graph.loadGraph = function() {
     .style("stroke-width", 1.5)
     .on("click", function(node) {
       if (node.type == "leg") {
-        var legislator = multi_graph.legislator_map[node_map[node.id].id];
+        var legislator = multigraph.legislator_map[node_map[node.id].id];
         legislator_pane.fillSenatorInfo(legislator);
       } else {
-        var contributor = multi_graph.contributors[node.id];
+        var contributor = multigraph.contributors[node.id];
         legislator_pane.fillContributorInfo(contributor);
       }
     })
@@ -152,7 +152,7 @@ multi_graph.loadGraph = function() {
     .append("text")
     .text(function(node) { 
       if (node.type == "leg") {
-        var legislator = multi_graph.legislator_map[node_map[node.id].id];
+        var legislator = multigraph.legislator_map[node_map[node.id].id];
         return legislator.name.official_full;
       } else {
         return node_map[node.id];

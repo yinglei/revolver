@@ -1,37 +1,34 @@
 $( document ).ready(function() {
 
-    multi_graph.load();
+    multigraph.load();
 
     refresh_view = function() {
 
         // Refresh branch
         var $branch = $('#branch-selector .selected');
         if ($branch.length) {
-            multi_graph.type = $branch.data('value');
+            multigraph.type = $branch.data('value');
         } else {
-            multi_graph.type = 'all';
+            multigraph.type = 'all';
         }
 
         // Refresh party
         var $party = $('#party-selector .selected');
         if ($party.length) {
-            multi_graph.party = $party.data('value');
+            multigraph.party = $party.data('value');
         } else {
-            multi_graph.party = 'all';
+            multigraph.party = 'all';
         }
 
         // Refresh gender
         var $gender = $('#gender-selector .selected');
         if ($gender.length) {
-            multi_graph.gender = $gender.data('value');
+            multigraph.gender = $gender.data('value');
         } else {
-            multi_graph.gender = 'all';
+            multigraph.gender = 'all';
         }
 
-        // DEBUG
-        //console.log(_.pick(multi_graph, 'type', 'party', 'gender'));
-
-        multi_graph.load();
+        multigraph.load();
     };
 
 
