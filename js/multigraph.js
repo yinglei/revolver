@@ -140,10 +140,10 @@ multigraph.loadGraph = function() {
     .on("click", function(node) {
       if (node.type == "leg") {
         var legislator = multigraph.legislator_map[node_map[node.id].id];
-        legislator_pane.fillSenatorInfo(legislator);
+        sidebar.fillSenatorInfo(legislator);
       } else {
         var contributor = multigraph.contributors[node.id];
-        legislator_pane.fillContributorInfo(contributor);
+        sidebar.fillContributorInfo(contributor);
       }
     })
     .call(force.drag);
